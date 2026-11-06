@@ -11,32 +11,38 @@ export default {
     extend: {
       colors: {
         bg: {
-          primary: "#151515",
-          secondary: "#202020",
-          card: "#272727",
-          elevated: "#2f2f2f",
+          primary: "var(--bg-primary)",
+          secondary: "var(--bg-secondary)",
+          card: "var(--bg-card)",
+          elevated: "var(--bg-elevated)",
         },
         ink: {
-          primary: "#F5F0E8",
-          secondary: "#A8A29E",
-          muted: "#6B6560",
-          accent: "#C6A77D",
-          "accent-hover": "#D4B88E",
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+          accent: "var(--accent)",
+          "accent-hover": "var(--accent-hover)",
         },
         border: {
-          DEFAULT: "rgba(255,255,255,0.08)",
-          accent: "rgba(198,167,125,0.3)",
-          subtle: "rgba(255,255,255,0.05)",
+          DEFAULT: "var(--border)",
+          accent: "var(--accent)",
+          subtle: "var(--border-subtle)",
         },
       },
       fontFamily: {
-        serif: ["Playfair Display", "Georgia", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["Outfit Variable", "sans-serif"],
+        sans: ["DM Sans Variable", "sans-serif"],
       },
       fontSize: {
         "reading-sm": ["1rem", { lineHeight: "1.9", letterSpacing: "0.01em" }],
-        "reading-base": ["1.125rem", { lineHeight: "1.9", letterSpacing: "0.01em" }],
-        "reading-lg": ["1.25rem", { lineHeight: "1.85", letterSpacing: "0.005em" }],
+        "reading-base": [
+          "1.125rem",
+          { lineHeight: "1.9", letterSpacing: "0.01em" },
+        ],
+        "reading-lg": [
+          "1.25rem",
+          { lineHeight: "1.85", letterSpacing: "0.005em" },
+        ],
       },
       maxWidth: {
         reading: "680px",
@@ -45,7 +51,7 @@ export default {
       animation: {
         "fade-in": "fadeIn 0.6s ease-out",
         "fade-up": "fadeUp 0.6s ease-out",
-        "shimmer": "shimmer 2s infinite",
+        shimmer: "shimmer 2s infinite",
       },
       keyframes: {
         fadeIn: {
@@ -67,4 +73,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

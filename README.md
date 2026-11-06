@@ -1,119 +1,35 @@
-# Intellectual Escape
+# Escape
 
-> **Read a little. Think a lot.**
+A quiet, full-screen app for short psychology reads and stories. The content library is intentionally empty: all previous sample concepts and stories were removed in this redesign.
 
-A premium, editorial-style web application for discovering short stories, psychological concepts, and philosophical ideas — all beautifully curated and designed for a 1–3 minute reading experience.
+## Run
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 18 + TypeScript |
-| Build | Vite 6 |
-| Styling | Tailwind CSS |
-| UI Components | shadcn/ui (custom-built) |
-| Animations | Framer Motion |
-| Routing | React Router 6 |
-| Icons | Lucide React |
-
----
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── layout/         # Sidebar, BottomNav, Layout wrapper
-│   ├── ui/             # Reusable shadcn/ui-style components
-│   ├── ContentCard.tsx # Versatile content card (default + compact)
-│   ├── HeroCard.tsx    # Large featured story card
-│   └── SearchBar.tsx   # Animated search input
-├── context/
-│   └── SavedContext.tsx # Bookmarks state (localStorage-backed)
-├── data/
-│   └── mockData.ts     # 18 richly-written stories & concepts
-├── hooks/
-│   └── useLocalStorage.ts
-├── lib/
-│   ├── api.ts          # Service layer (swap for real API later)
-│   └── utils.ts        # cn(), getTimeGreeting(), etc.
-├── pages/
-│   ├── HomePage.tsx
-│   ├── ExplorePage.tsx
-│   ├── StoriesPage.tsx
-│   ├── ReadPage.tsx
-│   ├── SavedPage.tsx
-│   └── ProfilePage.tsx
-└── types/
-    └── index.ts        # TypeScript interfaces
-```
-
----
-
-## Getting Started
-
-```bash
+```sh
 npm install
 npm run dev
 ```
 
-App runs at **http://localhost:5173**
+Open http://localhost:5173. Use `npm run build` for the production build and `npm run preview` to serve it.
 
----
+## Interface
 
-## Features
+- Two primary sections: Psychology and Stories.
+- One viewport per short, using native vertical scroll snapping and keyboard navigation.
+- Plain topic and mood controls, without cards or article grids.
+- A live Three.js sculpture for the empty feed. Motion can be paused and respects the device's reduced-motion preference.
+- Outfit display typography and DM Sans reading typography, both self-hosted.
+- Ink black, soft white, silver, and a restrained ice-blue accent. Light and device themes remain available in Settings.
+- Reading sizes of 18, 21, and 24 pixels.
+- Search, Saved, and Settings use open layouts without enclosing cards.
 
-- **5 fully-functional pages**: Home, Explore, Stories, Saved, Profile
-- **Reading experience**: Drop-cap first letter, prose-editorial layout, afterthought section
-- **Search & filter**: Real-time search + category filtering
-- **Bookmarks**: Save/unsave any story or concept, persisted to localStorage
-- **Random Thought**: Navigates to a random piece of content
-- **Responsive**: Desktop sidebar + mobile bottom navigation
-- **18 pieces of content**: Fully-written stories and concept explainers
+## Content
 
----
+`src/data/mockData.ts` exports an empty `contentItems` array. `extraStories.ts` is also empty. Old content IDs, sample passages, covers, featured cards, category grids, and sample statistics have been removed. The random-content API safely returns `undefined` for an empty library.
 
-## Backend Integration Guide
+The feed renderer is in `src/components/SectionPage.tsx`; when content is added later, each item occupies one full screen. There are no replacement sample reads or artificial feed entries.
 
-The app is structured for seamless FastAPI + PostgreSQL/Supabase integration.
+## Rendering
 
-### Step 1 — Add environment variables
-```bash
-cp .env.example .env.local
-# Set VITE_API_URL=http://localhost:8000/api/v1
-```
+The 3D scene lives in `src/components/Atmosphere.tsx` and loads separately from the interface. It uses a studio environment, a reflective physical material, capped pixel density, and a maximum of 30 rendered frames per second. It stops animating when hidden or paused, disposes its resources on navigation, and has a static visual fallback.
 
-### Step 2 — Replace mock API calls
-All data fetching is centralised in `src/lib/api.ts`.
-Swap the mock implementations with real `fetch()` calls:
-
-```typescript
-// Before (mock)
-getById: async (id: string) => _getById(id)
-
-// After (real API)
-getById: async (id: string) => {
-  const res = await fetch(`${API_BASE}/content/${id}`, { headers: authHeaders() })
-  return res.json()
-}
-```
-
-### Step 3 — Add auth
-Wrap routes in an `AuthGuard` component and add JWT headers in `src/lib/api.ts`.
-
----
-
-## Design System
-
-| Token | Value |
-|-------|-------|
-| Background | `#151515` |
-| Secondary BG | `#202020` |
-| Card BG | `#272727` |
-| Primary Text | `#F5F0E8` |
-| Secondary Text | `#A8A29E` |
-| Accent | `#C6A77D` |
-| Serif Font | Playfair Display |
-| Sans Font | Inter |
+See [DESIGN.md](DESIGN.md) for the design direction and verification notes.

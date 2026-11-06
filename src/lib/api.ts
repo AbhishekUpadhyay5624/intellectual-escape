@@ -41,7 +41,7 @@ export const api = {
       await delay();
       return _getRelated(item);
     },
-    random: async (): Promise<ContentItem> => {
+    random: async (): Promise<ContentItem | undefined> => {
       await delay();
       return _getRandom();
     },
